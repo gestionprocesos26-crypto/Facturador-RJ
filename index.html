@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REPUESTOS JARBEL RJ S.A.S. - Facturación</title>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<!-- Catálogo completo embebido (1650+ productos) -->
+<script src="catalogo.js"></script>
+<!-- Tesseract.js carga bajo demanda solo si no hay API key -->
+<script>window._tesseractReady = false;</script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f4f6f9;--surface:#fff;--border:#e2e8f0;--border2:#cbd5e1;
+  --text:#1e293b;--text2:#64748b;--text3:#94a3b8;
+  --blue:#3b82f6;--blue-bg:#eff6ff;--blue-border:#bfdbfe;
+  --green:#16a34a;--green-bg:#f0fdf4;--green-border:#bbf7d0;
+  --orange:#d97706;--orange-bg:#fffbeb;--orange-border:#fde68a;
+  --red:#dc2626;--red-bg:#fef2f2;--red-border:#fecaca;
+  --purple:#7c3aed;--radius:8px;--radius-lg:12px;
+  --shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06);
+  --shadow-lg:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -2px rgba(0,0,0,.05);
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}
+.topbar-brand{display:flex;flex-direction:column;gap:1px}
+.topbar-brand strong{font-size:13px;font-weight:700;color:var(--green)}
+.topbar-brand span{font-size:10px;color:var(--text2)}
+.topbar-actions{display:flex;align-items:center;gap:8px}
+.btn{cursor:pointer;font-family:inherit;font-size:12px;border-radius:var(--radius);padding:7px 14px;border:1px solid var(--border2);background:var(--surface);color:var(--text);font-weight:500;transition:.15s;display:inline-flex;align-items:center;gap:5px}
+.btn:hover{background:var(--bg)}
+.btn-primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn-primary:hover{background:#2563eb;border-color:#2563eb}
+.btn-green{background:var(--green);border-color:var(--green);color:#fff}
+.btn-green:hover{background:#15803d}
+.btn-red{background:var(--red);border-color:var(--red);color:#fff}
+.btn-red:hover{background:#b91c1c}
+.btn-sm{padding:4px 10px;font-size:11px}
+.btn-xs{padding:2px 7px;font-size:10px}
+.badge{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:600}
+.badge-ok{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
+.badge-warn{background:var(--orange-bg);color:var(--orange);border:1px solid var(--orange-border)}
+.badge-err{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border)}
+.badge-blue{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border)}
+main{max-width:1200px;margin:0 auto;padding:20px}
+.upload-zone{border:2px dashed var(--border2);border-radius:var(--radius-lg);padding:32px;text-align:center;cursor:pointer;background:var(--surface);transition:.2s;margin-bottom:20px}
+.upload-zone:hover,.upload-zone.over{border-color:var(--blue);background:var(--blue-bg)}
+.upload-zone svg{margin-bottom:10px;color:var(--text3)}
+.upload-zone h3{font-size:15px;font-weight:600;margin-bottom:4px}
+.upload-zone p{font-size:12px;color:var(--text2)}
+.invoices{display:flex;flex-direction:column;gap:16px}
+.inv-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow)}
+.inv-card-header{padding:12px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);background:var(--bg)}
+.inv-thumb{width:48px;height:48px;object-fit:cover;border-radius:var(--radius);border:1px solid var(--border);cursor:pointer}
+.inv-thumb-placeholder{width:48px;height:48px;border-radius:var(--radius);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;background:var(--bg);color:var(--text3);font-size:20px}
+.inv-meta{flex:1}
+.inv-meta .filename{font-size:12px;font-weight:600;color:var(--text)}
+.inv-meta .status-line{font-size:11px;color:var(--text2);margin-top:2px}
+.inv-card-body{padding:16px}
+.client-row{display:grid;grid-template-columns:1fr 140px 1fr;gap:10px;margin-bottom:14px}
+label{font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:3px}
+input[type=text],input[type=number],input[type=password],select{width:100%;padding:7px 10px;font-size:12px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--surface);color:var(--text);font-family:inherit}
+input:focus,select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+.table-wrap{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.tbl-head,.tbl-row,.tbl-foot{display:grid;grid-template-columns:60px 88px minmax(0,1fr) 100px 100px 180px;gap:0;font-size:11px}
+.tbl-head{background:var(--bg);font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.4px}
+.tbl-head > div,.tbl-row > div,.tbl-foot > div{padding:7px 10px;border-right:1px solid var(--border)}
+.tbl-head > div:last-child,.tbl-row > div:last-child,.tbl-foot > div:last-child{border-right:none}
+.tbl-row{border-top:1px solid var(--border);align-items:center}
+.tbl-row.warn{background:#fffbeb}
+.tbl-row.err{background:#fef2f2}
+.tbl-row.ok{background:var(--surface)}
+.tbl-foot{border-top:2px solid var(--border2);background:var(--bg);font-weight:700}
+.tbl-foot .total{color:var(--green);font-size:14px}
+.code-cell{font-family:'SF Mono','Fira Code',monospace;font-size:10px;color:var(--blue)}
+.desc-cell{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.num{text-align:right}
+.actions-cell{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.cell-edit{width:100%;min-width:0;box-sizing:border-box;border:1px solid transparent;background:transparent;font-family:inherit;font-size:inherit;color:inherit;padding:2px 4px;border-radius:3px;outline:none;appearance:textfield;-moz-appearance:textfield;-webkit-appearance:textfield}
+.cell-edit::-webkit-outer-spin-button,.cell-edit::-webkit-inner-spin-button{-webkit-appearance:none;appearance:none;margin:0;display:none}
+.cell-edit:hover{border-color:var(--border)}
+.cell-edit:focus{border-color:var(--blue);background:var(--surface)}
+.tbl-row > div:has(> .cell-edit){padding:4px 4px}
+.add-row{display:flex;gap:10px;margin-top:12px;align-items:flex-end;padding:12px;background:var(--bg);border-radius:var(--radius)}
+.add-row .srch-wrap{flex:1;position:relative}
+.suggestions{position:absolute;top:calc(100% + 2px);left:0;width:100%;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);max-height:200px;overflow-y:auto;z-index:50;box-shadow:var(--shadow-lg);display:none}
+.sug-item{padding:7px 10px;cursor:pointer;font-size:11px;border-bottom:1px solid var(--border)}
+.sug-item:hover{background:var(--blue-bg)}
+.sug-item .sc{font-family:monospace;font-size:10px;color:var(--blue)}
+.sug-item .sp{float:right;color:var(--text2)}
+.warn-bar{background:var(--orange-bg);border:1px solid var(--orange-border);border-radius:var(--radius);padding:8px 12px;font-size:12px;color:var(--orange);margin-bottom:10px;display:none}
+.inv-card-footer{padding:12px 16px;border-top:1px solid var(--border);background:var(--bg);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.progress-bar{height:3px;background:var(--blue);border-radius:3px;transition:width .3s;position:absolute;bottom:0;left:0}
+.ai-progress-wrap{text-align:center;padding:28px 20px}
+.ai-progress-track{background:var(--border);border-radius:99px;height:8px;overflow:hidden;margin:10px 0 6px}
+.ai-progress-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--blue),#60c0ff);transition:width .4s ease;width:0%}
+.ai-progress-fill.indeterminate{width:40%;animation:ai-slide 1.4s ease-in-out infinite}
+@keyframes ai-slide{0%{margin-left:-40%}100%{margin-left:100%}}
+/* Modal */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:1000;padding:20px}
+.modal-bg.open{display:flex}
+.modal{background:var(--surface);border-radius:var(--radius-lg);padding:24px;width:520px;max-width:100%;box-shadow:var(--shadow-lg)}
+.modal h3{font-size:15px;font-weight:700;margin-bottom:4px}
+.modal .subtitle{font-size:12px;color:var(--text2);margin-bottom:14px}
+.modal-sug{border:1px solid var(--border);border-radius:var(--radius);max-height:240px;overflow-y:auto;margin-top:8px}
+.modal-sug-item{padding:8px 12px;cursor:pointer;border-bottom:1px solid var(--border);font-size:12px;line-height:1.5}
+.modal-sug-item:hover,.modal-sug-item.sel{background:var(--blue-bg)}
+.modal-sug-item .mc{font-family:monospace;font-size:11px;color:var(--blue)}
+.modal-sug-item .mp{float:right;color:var(--text2)}
+.modal-actions{display:flex;gap:8px;margin-top:16px;justify-content:flex-end}
+/* Settings drawer */
+.settings-overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:500;display:none}
+.settings-overlay.open{display:block}
+.settings-panel{position:fixed;top:0;right:0;bottom:0;width:360px;max-width:95vw;background:var(--surface);border-left:1px solid var(--border);z-index:501;overflow-y:auto;padding:20px;transform:translateX(100%);transition:transform .25s ease;display:block}
+.settings-panel.open{transform:translateX(0)}
+.settings-drawer-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.settings-drawer-header h3{font-size:14px;font-weight:700;margin:0}
+.settings-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--text2);line-height:1;padding:2px 6px}
+.settings-close:hover{color:var(--text)}
+.settings-grid{display:flex;flex-direction:column;gap:16px}
+.settings-section{padding:14px;background:var(--bg);border-radius:var(--radius);border:1px solid var(--border)}
+.settings-section h4{font-size:12px;font-weight:700;margin-bottom:10px;color:var(--text)}
+.g-status{font-size:11px;padding:4px 8px;border-radius:var(--radius);margin-top:8px;display:inline-block}
+.g-status.ok{background:var(--green-bg);color:var(--green)}
+.g-status.pending{background:var(--orange-bg);color:var(--orange)}
+/* Image full preview */
+.img-preview-bg{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;z-index:2000}
+.img-preview-bg.open{display:flex}
+.img-preview-bg img{max-width:90vw;max-height:90vh;border-radius:var(--radius);box-shadow:var(--shadow-lg)}
+/* Bottom save bar */
+.save-bar{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;z-index:99;box-shadow:0 -4px 6px -1px rgba(0,0,0,.05);display:none}
+.save-bar.visible{display:flex}
+@media(max-width:768px){
+  .client-row{grid-template-columns:1fr}
+  .tbl-head,.tbl-row,.tbl-foot{grid-template-columns:50px 70px minmax(0,1fr) 88px 88px 160px;font-size:10px}
+  .settings-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-brand">
+    <strong>REPUESTOS JARBEL RJ S.A.S. — FACTURACIÓN</strong>
+    <span>NIT: 23.499.978-3 · Tel: 548 48 89 · Carrera 43 No. 76-35, Bogotá D.C.</span>
+  </div>
+  <div class="topbar-actions">
+    <span id="gStatusBadge" class="badge" style="display:none"></span>
+    <button class="btn" onclick="toggleSettings()">⚙ Configuración</button>
+  </div>
+</div>
+
+<main>
+
+  <!-- Settings Drawer -->
+  <div class="settings-overlay" id="settingsOverlay" onclick="toggleSettings()"></div>
+  <div class="settings-panel" id="settingsPanel">
+    <div class="settings-drawer-header">
+      <h3>⚙ Configuración</h3>
+      <button class="settings-close" onclick="toggleSettings()">✕</button>
+    </div>
+    <div class="settings-grid">
+      <div class="settings-section">
+        <h4>🤖 Anthropic API Key</h4>
+        <label>Clave API (se guarda localmente)</label>
+        <div style="display:flex;gap:8px">
+          <input type="password" id="apiKeyInput" placeholder="sk-ant-..." style="flex:1">
+          <button class="btn btn-primary btn-sm" onclick="saveApiKey()">Guardar</button>
+        </div>
+        <div id="apiKeyStatus" style="font-size:11px;margin-top:6px;color:var(--text2)"></div>
+        <details style="margin-top:8px">
+          <summary style="font-size:11px;cursor:pointer;color:var(--blue)">¿Cómo obtener la API Key?</summary>
+          <div style="font-size:10px;color:var(--text2);line-height:1.6;margin-top:6px">
+            1. Ir a <strong>console.anthropic.com</strong><br>
+            2. Crear cuenta o iniciar sesión<br>
+            3. Menú izquierdo → <strong>API Keys</strong><br>
+            4. Clic en <strong>Create Key</strong><br>
+            5. Copiar la clave (empieza con <code>sk-ant-</code>)<br>
+            6. Pégala aquí y clic en Guardar<br><br>
+            <span style="color:var(--orange)">⚠ Los primeros $5 USD son gratis. Analizar ~200 fotos cuesta aprox $1.</span>
+          </div>
+        </details>
+        <div style="margin-top:10px">
+          <label style="margin-bottom:4px">Modelo Claude</label>
+          <select id="modelSelect">
+            <option value="claude-sonnet-4-6">Claude Sonnet 4.6 (recomendado)</option>
+            <option value="claude-haiku-4-5-20251001">Claude Haiku 4.5 (más rápido)</option>
+            <option value="claude-opus-4-7">Claude Opus 4.7 (más potente)</option>
+          </select>
+        </div>
+        <div style="margin-top:10px;padding:8px;background:#f0f9ff;border:1px solid #bae6fd;border-radius:var(--radius);font-size:10px;color:#0369a1;line-height:1.5">
+          <strong>Sin API key:</strong> la app usará OCR gratuito (<strong>Tesseract.js</strong>) para leer el texto de las imágenes y buscará los productos en el catálogo usando los sinónimos aprendidos. Funciona offline pero es menos preciso que la IA.
+        </div>
+      </div>
+      <div class="settings-section">
+        <h4>📊 Google Sheets</h4>
+        <label>Google Client ID (para leer catálogo y guardar facturas)</label>
+        <input type="text" id="gClientId" placeholder="xxxx.apps.googleusercontent.com" style="margin-bottom:8px">
+        <button class="btn btn-primary btn-sm" onclick="initGoogleAuth()" style="width:100%">Conectar con Google</button>
+        <div id="gAuthStatus" class="g-status pending" style="margin-top:8px">No conectado</div>
+        <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
+          <div style="font-size:11px;font-weight:600;margin-bottom:6px">Catálogo</div>
+          <div id="catStatus" style="font-size:11px;color:var(--text2);margin-bottom:6px"></div>
+          <button class="btn btn-sm" onclick="tryLoadCatalogPublic()" style="width:100%;margin-bottom:4px">↻ Actualizar desde Drive</button>
+        </div>
+        <details style="margin-top:8px">
+          <summary style="font-size:11px;cursor:pointer;color:var(--blue)">¿Cómo obtener el Client ID?</summary>
+          <div style="font-size:10px;color:var(--text2);line-height:1.6;margin-top:6px">
+            1. Ir a <strong>console.cloud.google.com</strong><br>
+            2. Crear proyecto → APIs & Services → Credentials<br>
+            3. Create Credentials → OAuth Client ID<br>
+            4. Tipo: <strong>Web application</strong><br>
+            5. Authorized JS origins: <code>http://localhost</code> o tu dominio<br>
+            6. Copiar el Client ID aquí
+          </div>
+        </details>
+      </div>
+
+      <div class="settings-section">
+        <h4>📖 Sinónimos aprendidos</h4>
+        <div id="synStats" style="font-size:11px;color:var(--text2);margin-bottom:8px"></div>
+        <div id="synFileBanner" style="display:none;padding:6px 8px;border-radius:var(--radius);font-size:10px;margin-bottom:8px"></div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <button class="btn btn-sm btn-primary" onclick="linkSynonymFile()" style="width:100%" id="btnLinkFile">📂 Vincular sinonimos_rjch.json</button>
+          <button class="btn btn-sm btn-green" onclick="exportSynonyms()" style="width:100%">⬇ Descargar copia</button>
+          <label class="btn btn-sm" style="width:100%;justify-content:center;cursor:pointer">
+            ⬆ Importar archivo de sinónimos
+            <input type="file" accept=".json" style="display:none" onchange="importSynonyms(this)">
+          </label>
+          <button class="btn btn-sm btn-red" onclick="clearSynonyms()" style="width:100%">🗑 Limpiar todos</button>
+        </div>
+        <div style="margin-top:10px;padding:8px;background:var(--green-bg);border:1px solid var(--green-border);border-radius:var(--radius);font-size:10px;color:var(--green);line-height:1.5">
+          Vincula el archivo <code>sinonimos_rjch.json</code> del repositorio — cada vez que se aprenda un sinónimo nuevo se guardará automáticamente en ese archivo, sin hacer nada.
+        </div>
+        <div id="synPreview" style="margin-top:8px;max-height:100px;overflow-y:auto;font-size:10px;color:var(--text2);line-height:1.8"></div>
+      </div>
+    </div>
+    <div style="margin-top:12px;font-size:11px;color:var(--text2);background:var(--orange-bg);padding:8px 12px;border-radius:var(--radius);border:1px solid var(--orange-border)">
+      ⚠ La API key se guarda solo en tu navegador (localStorage). Nunca se envía a ningún servidor externo excepto a la API de Anthropic.
+    </div>
+  </div>
+
+  <!-- CORS banner (visible solo si se abre como file://) -->
+  <div id="corsBanner" style="display:none;background:#fef2f2;border:1px solid #fecaca;border-radius:var(--radius-lg);padding:16px 20px;margin-bottom:16px">
+    <div style="font-size:14px;font-weight:700;color:var(--red);margin-bottom:6px">⚠ Abre la app desde el servidor local, no como archivo</div>
+    <div style="font-size:12px;color:#7f1d1d;line-height:1.7">
+      Estás abriendo <code>index.html</code> directamente desde el disco — esto bloquea las llamadas a la API (error CORS).<br>
+      <strong>Solución:</strong> abre una terminal en la carpeta del proyecto y ejecuta:<br>
+      <code style="display:block;background:#fee2e2;padding:6px 10px;border-radius:6px;margin:6px 0;font-size:12px">python3 server.py</code>
+      Luego ve a <strong><a href="http://localhost:3000" style="color:var(--red)">http://localhost:3000</a></strong> en el navegador.<br>
+      En Windows puedes hacer doble clic en <code>iniciar.bat</code>. En Linux/Mac ejecuta <code>./iniciar.sh</code>.
+    </div>
+  </div>
+
+  <!-- Upload Zone -->
+  <div class="upload-zone" id="uploadZone"
+    onclick="document.getElementById('fileInput').click()"
+    ondragover="dragOver(event,true)" ondragleave="dragOver(event,false)" ondrop="onDrop(event)">
+    <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+      <polyline points="17 8 12 3 7 8"/>
+      <line x1="12" y1="3" x2="12" y2="15"/>
+    </svg>
+    <h3>Arrastra imágenes de facturas aquí</h3>
+    <p>o haz clic para seleccionar · Puedes subir varias a la vez</p>
+    <p style="margin-top:6px;font-size:11px;color:var(--text3)">JPG, PNG, WEBP · Por cada imagen se genera una factura</p>
+    <input type="file" id="fileInput" accept="image/*" multiple style="display:none" onchange="onFiles(this.files)">
+  </div>
+
+  <!-- Invoices -->
+  <div class="invoices" id="invoicesList"></div>
+
+</main>
+
+<!-- Save bar -->
+<div class="save-bar" id="saveBar">
+  <div>
+    <span id="saveBarInfo" style="font-size:13px;font-weight:600"></span>
+    <span id="saveBarWarn" style="font-size:11px;color:var(--orange);margin-left:10px"></span>
+  </div>
+  <div style="display:flex;gap:8px">
+    <button class="btn" onclick="copyAllTSV()" title="Copia todas las facturas como tabla para pegar en Excel">📋 Copiar para Excel</button>
+    <button class="btn" onclick="exportAllCSV()">⬇ Exportar CSV</button>
+    <button class="btn btn-green" onclick="saveAllToSheets()">💾 Guardar todas en Google Sheets</button>
+  </div>
+</div>
+
+<!-- Correction Modal -->
+<div class="modal-bg" id="corrModal">
+  <div class="modal">
+    <h3 id="corrTitle">Corregir artículo</h3>
+    <div id="corrSubtitle" class="subtitle"></div>
+    <input type="text" id="corrSearch" placeholder="Buscar en catálogo..." oninput="corrDoSearch()" autocomplete="off">
+    <div class="modal-sug" id="corrSug"></div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-primary" id="corrApply" onclick="applyCorrection()" disabled>Aplicar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Remove or Change choice modal -->
+<div class="modal-bg" id="removeChoiceModal">
+  <div class="modal" style="width:420px">
+    <h3>¿Qué deseas hacer con este artículo?</h3>
+    <div class="subtitle" id="removeChoiceDesc"></div>
+    <div class="modal-actions" style="justify-content:space-between">
+      <button class="btn" onclick="closeRemoveChoice()">Cancelar</button>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-primary" onclick="chooseChange()">Cambiar por otro</button>
+        <button class="btn btn-red" onclick="chooseRemove()">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Image Preview -->
+<div class="img-preview-bg" id="imgPreview" onclick="this.classList.remove('open')">
+  <img id="imgPreviewSrc" src="">
+</div>
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+let CATALOG = []; // loaded from Google Sheets or fallback
+let CATALOG_SOURCE = 'embedded'; // embedded | cached | live
+let gAccessToken = null;
+let invoices = []; // array of invoice objects
+let corrState = { invIdx: -1, rowIdx: -1, sel: null };
+let SYN_STORAGE = {};
+
+// ============================================================
+// EMBEDDED CATALOG FALLBACK
+// ============================================================
+// CAT_FALLBACK is loaded from catalogo.js (window.CAT_FALLBACK).
+// If catalogo.js failed to load, fall back to an empty array.
+const CAT_FALLBACK = Array.isArray(window.CAT_FALLBACK) ? window.CAT_FALLBACK : [];
+
+const SYN_BASE={estab:'estabilizadora',central:'centro',bup:'buje',buj:'buje',tijra:'tijera',fijra:'tijera',sup:'superior',inf:'inferior',del:'delantero',tras:'trasero',cja:'caja',amort:'amortiguador',montro:'montero',megan:'megane','2500':'2600','4x2':'4 x 2','4x4':'4 x 4',fronter:'frontier',hilox:'hilux',corola:'corolla',montr:'montero',hiloz:'hilux',navara:'navara',femplete:'templete',tojo:'ojo',k9:'r9','r-9':'r9',renol:'renault',reno:'renault',gama:'gamma'};
+
+const CATALOG_SHEET_ID = '1q7aCAEZaQcxpC7Ss1HAoi5JeoGSyXZ7k';
+const CATALOG_GID = '1644960831';
+const FACTURAS_SHEET_ID = '1NrSagiT_G3ZMpYp0S2EMlpK3TRP1oFjQM6e99gTOgUA';
+
+// ============================================================
+// INIT
+// ============================================================
+function init() {
+  // 1. Start with embedded fallback
+  CATALOG = [...CAT_FALLBACK];
+  CATALOG_SOURCE = 'embedded';
+
+  // 2. Try to load from localStorage cache (may have full 1650+ items)
+  loadCachedCatalog();
+
+  // 3. Load settings
+  const apiKey = localStorage.getItem('rjch_api_key');
+  if (apiKey) {
+    document.getElementById('apiKeyInput').value = apiKey;
+    document.getElementById('apiKeyStatus').textContent = '✓ API key cargada';
+  }
+  const model = localStorage.getItem('rjch_model');
+  if (model) document.getElementById('modelSelect').value = model;
+  document.getElementById('modelSelect').onchange = () =>
+    localStorage.setItem('rjch_model', document.getElementById('modelSelect').value);
+
+  const gId = localStorage.getItem('rjch_gclient_id');
+  if (gId) document.getElementById('gClientId').value = gId;
+
+  // 4. Load synonyms
+  try {
+    SYN_STORAGE = JSON.parse(localStorage.getItem('rjch_sinonimos') || '{}');
+  } catch(e) { SYN_STORAGE = {}; }
+  updateSynUI();
+
+  // 5. Try loading catalog from public URL (no auth needed if sheet is shared)
+  tryLoadCatalogPublic();
+
+  updateCatStatus();
+
+  // 6. Mostrar aviso CORS si se abre como file://
+  if (location.protocol === 'file:') {
+    document.getElementById('corsBanner').style.display = 'block';
+  }
+}
+
+function loadCachedCatalog() {
+  try {
+    const raw = localStorage.getItem('rjch_catalog_cache');
+    if (!raw) return;
+    const { items, ts } = JSON.parse(raw);
+    if (Array.isArray(items) && items.length > 10) {
+      CATALOG = items;
+      CATALOG_SOURCE = 'cached';
+      console.log(`Catálogo desde caché: ${CATALOG.length} productos (${new Date(ts).toLocaleDateString('es-CO')})`);
+    }
+  } catch(e) { /* ignore */ }
+}
+
+function saveCatalogCache(items) {
+  try {
+    localStorage.setItem('rjch_catalog_cache', JSON.stringify({ items, ts: Date.now() }));
+  } catch(e) { console.warn('No se pudo guardar caché del catálogo:', e); }
+}
+
+function updateCatStatus() {
+  const el = document.getElementById('catStatus');
+  if (!el) return;
+  const labels = { embedded: `📦 Embebido (${CATALOG.length} productos)`, cached: `💾 Caché local (${CATALOG.length} productos)`, live: `🌐 Drive en vivo (${CATALOG.length} productos)` };
+  el.textContent = labels[CATALOG_SOURCE] || CATALOG.length + ' productos';
+}
+
+function toggleSettings() {
+  document.getElementById('settingsPanel').classList.toggle('open');
+  document.getElementById('settingsOverlay').classList.toggle('open');
+}
+
+function saveApiKey() {
+  const k = document.getElementById('apiKeyInput').value.trim();
+  if (!k) { alert('Ingresa una API key'); return; }
+  localStorage.setItem('rjch_api_key', k);
+  document.getElementById('apiKeyStatus').textContent = '✓ Guardada correctamente';
+}
+
+// ============================================================
+// GOOGLE AUTH
+// ============================================================
+let gTokenClient = null;
+
+function initGoogleAuth() {
+  const clientId = document.getElementById('gClientId').value.trim();
+  if (!clientId) { alert('Ingresa el Google Client ID primero'); return; }
+  localStorage.setItem('rjch_gclient_id', clientId);
+
+  if (typeof google === 'undefined') {
+    alert('La librería de Google no cargó. Asegúrate de tener conexión a internet.');
+    return;
+  }
+
+  gTokenClient = google.accounts.oauth2.initTokenClient({
+    client_id: clientId,
+    scope: 'https://www.googleapis.com/auth/spreadsheets',
+    callback: async (resp) => {
+      if (resp.error) {
+        setGStatus('Error: ' + resp.error, false);
+        return;
+      }
+      gAccessToken = resp.access_token;
+      setGStatus('Conectado ✓', true);
+      updateGBadge(true);
+      await loadCatalogFromSheets();
+    }
+  });
+  gTokenClient.requestAccessToken();
+}
+
+function setGStatus(msg, ok) {
+  const el = document.getElementById('gAuthStatus');
+  el.textContent = msg;
+  el.className = 'g-status ' + (ok ? 'ok' : 'pending');
+}
+
+function updateGBadge(ok) {
+  const b = document.getElementById('gStatusBadge');
+  b.style.display = 'inline-flex';
+  b.className = 'badge ' + (ok ? 'badge-ok' : 'badge-warn');
+  b.textContent = ok ? '● Google conectado' : '● Google desconectado';
+}
+
+// ============================================================
+// LOAD CATALOG — PUBLIC CSV (no auth needed if sheet is shared)
+// ============================================================
+async function tryLoadCatalogPublic() {
+  const url = `https://docs.google.com/spreadsheets/d/${CATALOG_SHEET_ID}/export?format=csv&gid=${CATALOG_GID}`;
+  try {
+    const r = await fetch(url);
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const text = await r.text();
+    const items = parseCatalogCSV(text);
+    if (items.length > 50) {
+      CATALOG = items;
+      CATALOG_SOURCE = 'live';
+      saveCatalogCache(items);
+      updateCatStatus();
+      console.log(`Catálogo público cargado: ${items.length} productos`);
+    }
+  } catch(e) {
+    console.info('Catálogo público no disponible (hoja privada o sin conexión) — usando respaldo:', e.message);
+  }
+}
+
+function parseCatalogCSV(text) {
+  const lines = text.split('\n');
+  const items = [];
+  for (const line of lines) {
+    if (!line.trim()) continue;
+    // Parse CSV properly (handle quoted fields)
+    const cols = parseCSVLine(line);
+    if (!cols || cols.length < 2) continue;
+    const code = String(cols[0] || '').trim();
+    const desc = String(cols[1] || '').trim();
+    const priceRaw = String(cols[2] || cols[3] || '0').replace(/[^0-9.]/g, '');
+    const price = parseFloat(priceRaw) || 0;
+    if (code.match(/^RJ/i) && desc.length > 3) {
+      items.push({ code, desc, price });
+    }
+  }
+  return items;
+}
+
+function parseCSVLine(line) {
+  const result = [];
+  let cur = '', inQuote = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (ch === '"') { inQuote = !inQuote; }
+    else if (ch === ',' && !inQuote) { result.push(cur); cur = ''; }
+    else { cur += ch; }
+  }
+  result.push(cur);
+  return result;
+}
+
+// ============================================================
+// LOAD CATALOG FROM SHEETS (OAuth)
+// ============================================================
+async function loadCatalogFromSheets() {
+  if (!gAccessToken) return;
+  try {
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${CATALOG_SHEET_ID}/values/A:D?access_token=${gAccessToken}`;
+    const r = await fetch(url);
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const data = await r.json();
+    const rows = data.values || [];
+    const newCat = [];
+    for (const row of rows) {
+      if (!row[0] || !row[1]) continue;
+      const code = String(row[0]).trim();
+      const desc = String(row[1]).trim();
+      const priceRaw = String(row[2] || row[3] || '0').replace(/[^0-9.]/g,'');
+      const price = parseFloat(priceRaw) || 0;
+      if (code.match(/^RJ/i) && desc.length > 3) {
+        newCat.push({ code, desc, price });
+      }
+    }
+    if (newCat.length > 10) {
+      CATALOG = newCat;
+      CATALOG_SOURCE = 'live';
+      saveCatalogCache(newCat);
+      updateCatStatus();
+      console.log(`Catálogo cargado: ${CATALOG.length} productos`);
+      showToast(`✓ Catálogo actualizado: ${CATALOG.length} productos`);
+    }
+  } catch(e) {
+    console.warn('No se pudo cargar catálogo desde Sheets:', e);
+    showToast('Usando catálogo respaldo (' + CATALOG.length + ' productos)');
+  }
+}
+
+// ============================================================
+// DRAG & DROP / FILE INPUT
+// ============================================================
+function dragOver(e, on) {
+  e.preventDefault();
+  document.getElementById('uploadZone').classList.toggle('over', on);
+}
+
+function onDrop(e) {
+  e.preventDefault();
+  document.getElementById('uploadZone').classList.remove('over');
+  onFiles(e.dataTransfer.files);
+}
+
+function onFiles(files) {
+  document.getElementById('settingsPanel').classList.remove('open');
+  document.getElementById('settingsOverlay').classList.remove('open');
+  for (const f of files) {
+    if (!f.type.startsWith('image/')) continue;
+    addInvoice(f);
+  }
+}
+
+// ============================================================
+// INVOICE MANAGEMENT
+// ============================================================
+function addInvoice(file) {
+  const idx = invoices.length;
+  const inv = {
+    id: idx,
+    file,
+    imgData: null,
+    mimeType: file.type || 'image/jpeg',
+    status: 'loading', // loading | ready | saving | saved | error
+    statusMsg: 'Cargando imagen...',
+    items: [],
+    client: { name: '', factura: '', dir: '' }
+  };
+  invoices.push(inv);
+  renderInvoice(idx);
+  updateSaveBar();
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    inv.imgData = e.target.result;
+    inv.status = 'ready';
+    inv.statusMsg = 'Lista para analizar';
+    renderInvoice(idx);
+    // Auto-process
+    processInvoice(idx);
+  };
+  reader.readAsDataURL(file);
+}
+
+function renderInvoice(idx) {
+  const inv = invoices[idx];
+  if (!inv) return;
+  const list = document.getElementById('invoicesList');
+
+  let el = document.getElementById(`inv-${idx}`);
+  if (!el) {
+    el = document.createElement('div');
+    el.id = `inv-${idx}`;
+    el.className = 'inv-card';
+    list.appendChild(el);
+  }
+
+  const warns = inv.items.filter(i => i.status === 'warn').length;
+  const errs = inv.items.filter(i => i.status === 'err').length;
+  const total = inv.items.reduce((s, i) => s + i.total, 0);
+
+  const statusIcon = inv.status === 'processing' ? '🔍'
+    : inv.status === 'saved' ? '✅' : inv.status === 'error' ? '❌' : inv.items.length ? '📋' : '🖼';
+
+  el.innerHTML = `
+  <div class="inv-card-header">
+    ${inv.imgData
+      ? `<img class="inv-thumb" src="${inv.imgData}" onclick="previewImg('${inv.imgData}')" title="Ver imagen completa">`
+      : `<div class="inv-thumb-placeholder">🖼</div>`}
+    <div class="inv-meta">
+      <div class="filename">${statusIcon} ${inv.file.name}</div>
+      <div class="status-line">${inv.statusMsg}
+        ${inv.items.length ? ` · ${inv.items.length} artículos · <strong>${fmt(total)}</strong>` : ''}
+        ${warns ? ` · <span style="color:var(--orange)">${warns} incierto(s)</span>` : ''}
+        ${errs ? ` · <span style="color:var(--red)">${errs} no encontrado(s)</span>` : ''}
+      </div>
+    </div>
+    <div style="display:flex;gap:6px">
+      ${inv.status === 'ready' || inv.status === 'error'
+        ? `<button class="btn btn-primary btn-sm" onclick="processInvoice(${idx})">🤖 Analizar IA</button>` : ''}
+      <button class="btn btn-sm btn-red" onclick="removeInvoice(${idx})">✕</button>
+    </div>
+  </div>
+
+  <div class="inv-card-body">
+    <div class="client-row">
+      <div><label>Cliente</label><input type="text" value="${esc(inv.client.name)}" oninput="invoices[${idx}].client.name=this.value" placeholder="Nombre del cliente"></div>
+      <div><label>N° Factura</label><input type="text" value="${esc(inv.client.factura)}" oninput="invoices[${idx}].client.factura=this.value" placeholder="001"></div>
+      <div><label>Dirección</label><input type="text" value="${esc(inv.client.dir)}" oninput="invoices[${idx}].client.dir=this.value" placeholder="Dirección"></div>
+    </div>
+
+    ${warns || errs ? `<div class="warn-bar" style="display:block">
+      ${warns ? `⚠ ${warns} artículo(s) incierto(s) — confirma o corrige. ` : ''}
+      ${errs ? `❌ ${errs} artículo(s) no encontrado(s) — asigna un producto del catálogo.` : ''}
+    </div>` : ''}
+
+    ${inv.items.length ? `
+    <div class="table-wrap">
+      <div class="tbl-head">
+        <div>Cant</div><div>Código</div><div>Descripción</div>
+        <div class="num">Vr. Unit.</div><div class="num">Vr. Total</div><div>Estado</div>
+      </div>
+      ${inv.items.map((it, ri) => `
+      <div class="tbl-row ${it.status}">
+        <div><input type="number" class="cell-edit" value="${it.qty}" min="0" step="1" onchange="updateQty(${idx},${ri},this.value)" style="text-align:center;font-weight:700"></div>
+        <div class="code-cell">${it.code === '?' || it.code === '!' ? `<span style="color:var(--${it.code==='?'?'orange':'red'})">${it.code}</span>` : it.code}</div>
+        <div class="desc-cell" title="${esc(it.desc)}">${esc(it.desc)}</div>
+        <div class="num"><input type="number" class="cell-edit num" value="${it.unit || ''}" min="0" step="1" onchange="updateUnit(${idx},${ri},this.value)" placeholder="—"></div>
+        <div class="num" style="font-weight:700">${it.total ? fmt(it.total) : '—'}</div>
+        <div class="actions-cell">
+          ${it.status === 'ok' ? `<span class="badge badge-ok">OK</span>` : ''}
+          ${it.status === 'warn' ? `<span class="badge badge-warn">Incierto</span>
+            ${it.code !== '?' && it.code !== '!' && it.code ? `<button class="btn btn-xs" style="background:var(--orange-bg);border-color:var(--orange-border);color:var(--orange)" onclick="confirmItem(${idx},${ri})">✓ OK</button>` : ''}
+            <button class="btn btn-xs" onclick="openModal(${idx},${ri},'corr')">Corregir</button>` : ''}
+          ${it.status === 'err' ? `<span class="badge badge-err">No encontrado</span>
+            <button class="btn btn-xs btn-primary" onclick="openModal(${idx},${ri},'add')">Asignar</button>` : ''}
+          <button class="btn btn-xs btn-red" onclick="askRemoveOrChange(${idx},${ri})">✕</button>
+        </div>
+      </div>`).join('')}
+      <div class="tbl-foot">
+        <div style="grid-column:1/5;text-align:right;color:var(--text2);font-size:11px;align-self:center">TOTAL $</div>
+        <div class="num total">${fmt(total)}</div>
+        <div></div>
+      </div>
+    </div>` : inv.status === 'processing' ? `<div class="ai-progress-wrap"><div style="font-size:13px;color:var(--text2);margin-bottom:4px">${inv.statusMsg || 'Analizando con IA...'}</div><div class="ai-progress-track"><div class="ai-progress-fill indeterminate"></div></div><div style="font-size:11px;color:var(--text2)">Esto puede tomar hasta 30 segundos</div></div>`
+: inv.status === 'error' ? `<div style="text-align:center;padding:28px 20px"><div style="font-size:22px;margin-bottom:8px">❌</div><div style="font-size:13px;color:var(--red,#e55);font-weight:600;margin-bottom:4px">Error al analizar</div><div style="font-size:12px;color:var(--text2)">${inv.statusMsg.replace('Error: ','')}</div></div>` : ''}
+
+    <!-- Manual add row -->
+    <div class="add-row">
+      <div style="flex:0 0 60px">
+        <label>Cant.</label>
+        <input type="number" id="qty-${idx}" value="1" min="1" style="text-align:center">
+      </div>
+      <div class="srch-wrap">
+        <label>Agregar artículo del catálogo</label>
+        <input type="text" id="srch-${idx}" placeholder="Buscar por nombre o código..." oninput="doSearch(${idx})" autocomplete="off">
+        <div class="suggestions" id="sug-${idx}"></div>
+      </div>
+      <div style="padding-top:18px">
+        <button class="btn btn-green btn-sm" onclick="addManualItem(${idx})">+ Agregar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="inv-card-footer">
+    <div style="font-size:12px;color:var(--text2)">
+      ${inv.status === 'saved' ? '<span style="color:var(--green);font-weight:600">✅ Guardada en Google Sheets</span>' : ''}
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-sm" onclick="copyTableTSV(${idx})" title="Copia la tabla para pegar en Excel">📋 Copiar para Excel</button>
+      <button class="btn btn-sm" onclick="exportCSV(${idx})">⬇ CSV</button>
+      <button class="btn btn-green btn-sm" onclick="saveInvoice(${idx})">💾 Guardar en Sheets</button>
+    </div>
+  </div>
+  `;
+
+  // Close suggestion dropdown on outside click
+  document.addEventListener('click', (e) => {
+    const sug = document.getElementById(`sug-${idx}`);
+    if (sug && !e.target.closest(`#srch-${idx}`) && !e.target.closest(`#sug-${idx}`)) {
+      sug.style.display = 'none';
+    }
+  }, { once: false });
+
+  updateSaveBar();
+}
+
+function removeInvoice(idx) {
+  if (!confirm('¿Eliminar esta factura?')) return;
+  invoices.splice(idx, 1);
+  // Re-index remaining
+  invoices.forEach((inv, i) => inv.id = i);
+  const list = document.getElementById('invoicesList');
+  list.innerHTML = '';
+  invoices.forEach((_, i) => renderInvoice(i));
+  updateSaveBar();
+}
+
+function removeItem(invIdx, rowIdx) {
+  invoices[invIdx].items.splice(rowIdx, 1);
+  renderInvoice(invIdx);
+}
+
+let removeChoiceState = null;
+function askRemoveOrChange(invIdx, rowIdx) {
+  const item = invoices[invIdx].items[rowIdx];
+  removeChoiceState = { invIdx, rowIdx };
+  document.getElementById('removeChoiceDesc').textContent = `${item.qty} × ${item.desc || '(sin descripción)'}`;
+  document.getElementById('removeChoiceModal').classList.add('open');
+}
+function closeRemoveChoice() {
+  document.getElementById('removeChoiceModal').classList.remove('open');
+  removeChoiceState = null;
+}
+function chooseRemove() {
+  if (!removeChoiceState) return;
+  const { invIdx, rowIdx } = removeChoiceState;
+  closeRemoveChoice();
+  removeItem(invIdx, rowIdx);
+}
+function chooseChange() {
+  if (!removeChoiceState) return;
+  const { invIdx, rowIdx } = removeChoiceState;
+  const item = invoices[invIdx].items[rowIdx];
+  const mode = item.status === 'err' ? 'add' : 'corr';
+  closeRemoveChoice();
+  openModal(invIdx, rowIdx, mode);
+}
+
+function updateQty(invIdx, rowIdx, val) {
+  const item = invoices[invIdx].items[rowIdx];
+  const n = Math.max(0, parseFloat(val) || 0);
+  item.qty = n;
+  item.total = n * (item.unit || 0);
+  renderInvoice(invIdx);
+}
+function updateUnit(invIdx, rowIdx, val) {
+  const item = invoices[invIdx].items[rowIdx];
+  const n = Math.max(0, parseFloat(val) || 0);
+  item.unit = n;
+  item.total = (item.qty || 0) * n;
+  renderInvoice(invIdx);
+}
+
+function confirmItem(invIdx, rowIdx) {
+  const item = invoices[invIdx].items[rowIdx];
+  item.status = 'ok';
+  if (item.suggestedCode) {
+    const cat = CATALOG.find(p => p.code === item.suggestedCode);
+    if (cat) { item.code = cat.code; item.desc = cat.desc; item.unit = cat.price; item.total = item.qty * cat.price; }
+    delete item.suggestedCode;
+  } else if (item.code === '?') {
+    const match = findBestMatch(item.desc);
+    if (match) { item.code = match.code; item.desc = match.desc; item.unit = match.price; item.total = item.qty * match.price; }
+  }
+  renderInvoice(invIdx);
+}
+
+// ============================================================
+// AI PROCESSING
+// ============================================================
+async function processInvoice(idx) {
+  const inv = invoices[idx];
+  const apiKey = localStorage.getItem('rjch_api_key');
+  if (!apiKey) {
+    // Fallback: free OCR with Tesseract.js
+    await processWithTesseract(idx);
+    return;
+  }
+
+  inv.status = 'processing';
+  inv.statusMsg = 'Analizando con IA...';
+  renderInvoice(idx);
+
+  const catSample = CATALOG.map(p => `${p.code}|${p.desc}|${p.price}`).join('\n');
+
+  const prompt = `Eres el asistente del Facturador RJCH para Miryam Elena Roberto — Partes y Accesorios para Vehículos.
+
+Analiza la imagen de esta factura y extrae TODOS los artículos listados.
+
+Para cada artículo responde EXACTAMENTE en este formato (una línea por artículo):
+CANT|CODIGO|DESCRIPCION|PRECIO
+
+Reglas:
+- Si identificas el artículo con seguridad en el catálogo → usa su CODIGO y PRECIO exactos
+- Si estás incierto (posible match) → pon ? en CODIGO y PRECIO: CANT|?|DESCRIPCION_APROXIMADA|?
+- Si no puedes identificar → pon ! en CODIGO y PRECIO: CANT|!|TEXTO_EN_IMAGEN|!
+- SOLO responde con las líneas de artículos, sin texto adicional
+
+Sinónimos comunes (palabra en factura → término real):
+estab→estabilizadora, bup/buj→buje, tijra→tijera, sup→superior, inf→inferior, del→delantero, tras→trasero, megan→megane, montro/montr→montero, hilox/hiloz→hilux, corola→corolla, fronter→frontier, 2500→2600 (LUV 2500 NO EXISTE), central→centro, femplete→templete, tojo→ojo, k9→r9, r-9→r9, renol→renault, reno→renault, gama→gamma
+
+Catálogo completo (código|descripción|precio):
+${catSample}`;
+
+  const b64 = inv.imgData.split(',')[1];
+  const model = localStorage.getItem('rjch_model') || 'claude-sonnet-4-6';
+
+  try {
+    // Usar proxy local (evita CORS). Si se despliega en hosting, llamar directo.
+    const isLocalhost = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+    const apiUrl = isLocalhost ? '/proxy/anthropic' : 'https://api.anthropic.com/v1/messages';
+    const headers = isLocalhost
+      ? { 'Content-Type': 'application/json', 'X-Api-Key': apiKey }
+      : { 'Content-Type': 'application/json', 'x-api-key': apiKey, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-allow-browser': 'true' };
+
+    const resp = await fetch(apiUrl, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        model,
+        max_tokens: 2048,
+        messages: [{
+          role: 'user',
+          content: [
+            { type: 'image', source: { type: 'base64', media_type: inv.mimeType, data: b64 } },
+            { type: 'text', text: prompt }
+          ]
+        }]
+      })
+    });
+
+    if (!resp.ok) {
+      const err = await resp.json().catch(() => ({}));
+      console.error('Anthropic error:', JSON.stringify(err, null, 2));
+      const msg = err.error?.message || '';
+      if (msg.toLowerCase().includes('credit') || msg.toLowerCase().includes('balance')) {
+        throw new Error('¡Ups! Se agotaron los créditos de la API. Recarga en console.anthropic.com → Billing');
+      }
+      throw new Error(msg || 'HTTP ' + resp.status);
+    }
+
+    const data = await resp.json();
+    const text = data.content?.[0]?.text || '';
+    const items = parseAIResponse(text);
+
+    inv.items = items;
+    inv.status = 'ready';
+    inv.statusMsg = `IA: ${items.length} artículo(s) detectado(s)`;
+    renderInvoice(idx);
+
+  } catch(e) {
+    inv.status = 'error';
+    inv.statusMsg = 'Error: ' + e.message;
+    renderInvoice(idx);
+  }
+}
+
+function parseAIResponse(text) {
+  const lines = text.trim().split('\n').filter(l => l.trim() && l.includes('|'));
+  const items = [];
+
+  for (const line of lines) {
+    const parts = line.split('|').map(p => p.trim());
+    if (parts.length < 2) continue;
+
+    const qty = parseInt(parts[0]) || 1;
+    const code = parts[1] || '!';
+    const desc = parts[2] || '';
+    const priceRaw = parts[3] || '0';
+
+    let status, unit, total;
+
+    if (code === '?' || priceRaw === '?') {
+      // Uncertain — try to find in catalog
+      const results = search(desc, 1);
+      const match = results[0] || null;
+      if (match && match.sc >= 40) {
+        // High confidence local match — promote to ok
+        status = 'ok';
+        unit = match.price;
+        total = qty * match.price;
+        items.push({ qty, code: match.code, desc: match.desc, unit, total, status });
+      } else if (match) {
+        status = 'warn';
+        unit = match.price;
+        total = qty * match.price;
+        items.push({ qty, code: '?', desc, unit, total, status, origDesc: desc, suggestedCode: match.code });
+      } else {
+        status = 'warn';
+        unit = 0; total = 0;
+        items.push({ qty, code: '?', desc, unit, total, status, origDesc: desc });
+      }
+    } else if (code === '!') {
+      status = 'err';
+      unit = 0; total = 0;
+      items.push({ qty, code: '!', desc, unit, total, status, origDesc: desc });
+    } else {
+      // Confident match — verify in catalog
+      const catItem = CATALOG.find(p => p.code === code);
+      if (catItem) {
+        status = 'ok';
+        unit = catItem.price;
+        total = qty * catItem.price;
+        items.push({ qty, code, desc: catItem.desc, unit, total, status });
+      } else {
+        // Code not in catalog — mark as uncertain
+        const pNum = parseFloat(String(priceRaw).replace(/[^0-9.]/g,'')) || 0;
+        status = 'warn';
+        unit = pNum;
+        total = qty * pNum;
+        items.push({ qty, code, desc, unit, total, status, origDesc: desc });
+      }
+    }
+  }
+  return items;
+}
+
+// ============================================================
+// CATALOG SEARCH
+// ============================================================
+const allSyn = () => ({ ...SYN_BASE, ...SYN_STORAGE });
+
+function norm(s) {
+  return s.toUpperCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^A-Z0-9\s]/g,' ').replace(/\s+/g,' ').trim();
+}
+
+function apSyn(t) {
+  const s = allSyn();
+  let result = norm(t);
+  // Aplicar primero sinónimos multi-palabra (los más largos primero, para evitar solapes)
+  const multiKeys = Object.keys(s).filter(k => k.includes(' ')).sort((a,b) => b.length - a.length);
+  for (const k of multiKeys) {
+    const escaped = k.toUpperCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    result = result.replace(new RegExp('\\b' + escaped + '\\b', 'g'), s[k].toUpperCase());
+  }
+  // Luego sinónimos de una sola palabra
+  return result.split(' ').map(w => {
+    const l = w.toLowerCase();
+    return s[l] ? s[l].toUpperCase() : w;
+  }).join(' ');
+}
+
+function scoreMatch(q, p) {
+  const qn = apSyn(q), pn = norm(p.desc + ' ' + p.code);
+  const qt = qn.split(' ').filter(w => w.length > 1);
+  const pt = pn.split(' ').filter(w => w.length > 1);
+  let s = 0, m = 0;
+  for (const qw of qt) {
+    for (const pw of pt) {
+      if (pw === qw) { s += 10; m++; break; }
+      if (pw.startsWith(qw) || qw.startsWith(pw)) { s += 6; m++; break; }
+      if (pw.includes(qw) || qw.includes(pw)) { s += 3; m++; break; }
+    }
+  }
+  return s * (m / Math.max(qt.length, 1));
+}
+
+function search(q, n = 8) {
+  if (!q || q.trim().length < 2) return [];
+  return CATALOG.map(p => ({ ...p, sc: scoreMatch(q, p) }))
+    .filter(p => p.sc > 0)
+    .sort((a, b) => b.sc - a.sc)
+    .slice(0, n);
+}
+
+function findBestMatch(desc) {
+  const results = search(desc, 1);
+  return results.length ? results[0] : null;
+}
+
+// Manual add
+const manualSel = {};
+
+function doSearch(invIdx) {
+  const q = document.getElementById(`srch-${invIdx}`).value;
+  const res = search(q);
+  const sug = document.getElementById(`sug-${invIdx}`);
+  if (!res.length || q.length < 2) { sug.style.display = 'none'; return; }
+  sug.style.display = 'block';
+  sug.innerHTML = res.map(p =>
+    `<div class="sug-item" onclick="pickManual(${invIdx},'${esc2(p.code)}')">
+      <span class="sc">${p.code}</span>
+      <span class="sp">$${Math.round(p.price).toLocaleString('es-CO')}</span><br>
+      ${p.desc}
+    </div>`
+  ).join('');
+}
+
+function pickManual(invIdx, code) {
+  const item = CATALOG.find(p => p.code === code);
+  if (!item) return;
+  manualSel[invIdx] = item;
+  document.getElementById(`srch-${invIdx}`).value = item.desc;
+  document.getElementById(`sug-${invIdx}`).style.display = 'none';
+}
+
+function addManualItem(invIdx) {
+  const sel = manualSel[invIdx];
+  if (!sel) { alert('Selecciona un producto de la lista primero'); return; }
+  const qty = parseInt(document.getElementById(`qty-${invIdx}`).value) || 1;
+  invoices[invIdx].items.push({
+    qty, code: sel.code, desc: sel.desc, unit: sel.price,
+    total: qty * sel.price, status: 'ok'
+  });
+  manualSel[invIdx] = null;
+  renderInvoice(invIdx);
+}
+
+// ============================================================
+// MODAL
+// ============================================================
+function openModal(invIdx, rowIdx, mode) {
+  corrState = { invIdx, rowIdx, sel: null };
+  const item = invoices[invIdx].items[rowIdx];
+  document.getElementById('corrTitle').textContent = mode === 'add'
+    ? `Asignar artículo: "${item.desc}"`
+    : `Corregir artículo incierto: "${item.desc}"`;
+  document.getElementById('corrSubtitle').textContent =
+    mode === 'add'
+    ? 'Busca el producto correcto en el catálogo y aplícalo.'
+    : 'La IA no está segura de este artículo. Busca el correcto y aplícalo.';
+  document.getElementById('corrSearch').value = item.desc.replace(/[?!]/g,'').trim();
+  document.getElementById('corrApply').disabled = true;
+  corrDoSearch();
+  document.getElementById('corrModal').classList.add('open');
+  setTimeout(() => document.getElementById('corrSearch').focus(), 100);
+}
+
+function closeModal() {
+  document.getElementById('corrModal').classList.remove('open');
+}
+
+function corrDoSearch() {
+  const q = document.getElementById('corrSearch').value;
+  const res = search(q, 12);
+  document.getElementById('corrSug').innerHTML = res.map(p =>
+    `<div class="modal-sug-item" onclick="corrPick('${esc2(p.code)}',this)">
+      <span class="mc">${p.code}</span>
+      <span class="mp">$${Math.round(p.price).toLocaleString('es-CO')}</span><br>
+      ${p.desc}
+    </div>`
+  ).join('') || '<div style="padding:12px;text-align:center;color:var(--text2);font-size:12px">Sin resultados</div>';
+}
+
+function corrPick(code, el) {
+  corrState.sel = CATALOG.find(p => p.code === code);
+  document.getElementById('corrApply').disabled = false;
+  document.querySelectorAll('.modal-sug-item').forEach(e => e.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+function applyCorrection() {
+  if (!corrState.sel) { closeModal(); return; }
+  const { invIdx, rowIdx, sel } = corrState;
+  const orig = invoices[invIdx].items[rowIdx];
+
+  // Learn synonym if applicable
+  learnSynonym(orig.origDesc || orig.desc, sel.desc);
+
+  invoices[invIdx].items[rowIdx] = {
+    ...orig,
+    code: sel.code,
+    desc: sel.desc,
+    unit: sel.price,
+    total: orig.qty * sel.price,
+    status: 'ok'
+  };
+  closeModal();
+  renderInvoice(invIdx);
+}
+
+function learnSynonym(origDesc, newDesc) {
+  if (!origDesc || !newDesc) return;
+  const origWords = norm(origDesc).split(' ').filter(w => w.length > 2);
+  const newWords = norm(newDesc).split(' ').filter(w => w.length > 2);
+  const syn = allSyn();
+  let learned = false;
+  origWords.forEach(ow => {
+    const lw = ow.toLowerCase();
+    if (!syn[lw] && !newWords.includes(ow)) {
+      const match = newWords.find(nw => nw !== ow && nw.length > 2);
+      if (match) {
+        SYN_STORAGE[lw] = match.toLowerCase();
+        learned = true;
+      }
+    }
+  });
+  if (learned) {
+    localStorage.setItem('rjch_sinonimos', JSON.stringify(SYN_STORAGE));
+    updateSynUI();
+    autoSaveSynFile(); // escribe al archivo del repositorio si está vinculado
+  }
+}
+
+// ============================================================
+// SAVE TO SHEETS
+// ============================================================
+async function saveInvoice(idx) {
+  if (!gAccessToken) {
+    const go = confirm('No estás conectado a Google. ¿Conectar ahora?');
+    if (go) { toggleSettings(); initGoogleAuth(); }
+    return;
+  }
+
+  const inv = invoices[idx];
+  if (!inv.items.length) { alert('No hay artículos en esta factura'); return; }
+
+  inv.status = 'saving';
+  inv.statusMsg = 'Guardando en Google Sheets...';
+  renderInvoice(idx);
+
+  const fecha = new Date().toLocaleDateString('es-CO');
+  const nf = inv.client.factura || '(sin número)';
+  const cl = inv.client.name || '(sin nombre)';
+  const total = inv.items.reduce((s, i) => s + i.total, 0);
+
+  const rows = inv.items.map(it => [
+    fecha, nf, cl, it.code, it.desc,
+    it.qty, Math.round(it.unit), Math.round(it.total), Math.round(total)
+  ]);
+
+  try {
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${FACTURAS_SHEET_ID}/values/A:I:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`;
+    const r = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${gAccessToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ values: rows })
+    });
+    if (!r.ok) {
+      const err = await r.json().catch(() => ({}));
+      throw new Error(err.error?.message || 'HTTP ' + r.status);
+    }
+    inv.status = 'saved';
+    inv.statusMsg = 'Guardada en Google Sheets ✅';
+    showToast('✅ Factura guardada en Google Sheets');
+  } catch(e) {
+    inv.status = 'ready';
+    inv.statusMsg = 'Error al guardar: ' + e.message;
+    alert('Error al guardar: ' + e.message);
+  }
+  renderInvoice(idx);
+}
+
+async function saveAllToSheets() {
+  for (let i = 0; i < invoices.length; i++) {
+    if (invoices[i].status !== 'saved' && invoices[i].items.length) {
+      await saveInvoice(i);
+    }
+  }
+}
+
+// ============================================================
+// CSV EXPORT
+// ============================================================
+function exportCSV(idx) {
+  const inv = invoices[idx];
+  const fecha = new Date().toLocaleDateString('es-CO');
+  const rows = [
+    ['Fecha','N_Factura','Cliente','Codigo','Descripcion','Cantidad','Vr_Unitario','Vr_Total','Total_Factura'],
+    ...inv.items.map(it => [
+      fecha, inv.client.factura || '', inv.client.name || '',
+      it.code, it.desc, it.qty, Math.round(it.unit), Math.round(it.total),
+      Math.round(inv.items.reduce((s,i) => s+i.total, 0))
+    ])
+  ];
+  downloadCSV(rows, `factura_rjch_${idx+1}.csv`);
+}
+
+function exportAllCSV() {
+  const fecha = new Date().toLocaleDateString('es-CO');
+  const rows = [['Fecha','N_Factura','Cliente','Imagen','Codigo','Descripcion','Cantidad','Vr_Unitario','Vr_Total','Total_Factura']];
+  for (const inv of invoices) {
+    const total = inv.items.reduce((s,i) => s+i.total, 0);
+    for (const it of inv.items) {
+      rows.push([fecha, inv.client.factura||'', inv.client.name||'', inv.file.name,
+        it.code, it.desc, it.qty, Math.round(it.unit), Math.round(it.total), Math.round(total)]);
+    }
+  }
+  downloadCSV(rows, 'facturas_rjch_todas.csv');
+}
+
+function downloadCSV(rows, filename) {
+  const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,﻿' + encodeURIComponent(csv);
+  a.download = filename;
+  a.click();
+}
+
+// ============================================================
+// SAVE BAR
+// ============================================================
+function updateSaveBar() {
+  const bar = document.getElementById('saveBar');
+  if (!invoices.length) { bar.classList.remove('visible'); return; }
+  bar.classList.add('visible');
+  const total = invoices.reduce((s, inv) => s + inv.items.reduce((ss, it) => ss + it.total, 0), 0);
+  const warns = invoices.reduce((s, inv) => s + inv.items.filter(i => i.status !== 'ok').length, 0);
+  document.getElementById('saveBarInfo').textContent =
+    `${invoices.length} factura(s) · ${invoices.reduce((s,inv)=>s+inv.items.length,0)} artículos · Total: ${fmt(total)}`;
+  document.getElementById('saveBarWarn').textContent = warns ? `⚠ ${warns} artículo(s) por revisar` : '';
+}
+
+// ============================================================
+// IMAGE PREVIEW
+// ============================================================
+function previewImg(src) {
+  document.getElementById('imgPreviewSrc').src = src;
+  document.getElementById('imgPreview').classList.add('open');
+}
+
+// ============================================================
+// UTILS
+// ============================================================
+function fmt(n) { return '$ ' + Math.round(n).toLocaleString('es-CO'); }
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function esc2(s) { return String(s||'').replace(/'/g,"\\'"); }
+
+let toastTimer;
+function showToast(msg) {
+  let t = document.getElementById('toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'toast';
+    t.style = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#1e293b;color:#fff;padding:10px 18px;border-radius:8px;font-size:13px;z-index:9999;box-shadow:0 4px 12px rgba(0,0,0,.3);transition:opacity .3s';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.opacity = '1';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.style.opacity = '0', 3000);
+}
+
+// ============================================================
+// TESSERACT OCR FALLBACK (free, no API key needed)
+// ============================================================
+async function loadTesseract() {
+  if (window.Tesseract) return true;
+  return new Promise((resolve) => {
+    const s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';
+    s.onload = () => resolve(true);
+    s.onerror = () => resolve(false);
+    document.head.appendChild(s);
+  });
+}
+
+async function processWithTesseract(idx) {
+  const inv = invoices[idx];
+  inv.status = 'processing';
+  inv.statusMsg = 'OCR gratuito (Tesseract) — cargando...';
+  renderInvoice(idx);
+
+  const ok = await loadTesseract();
+  if (!ok) {
+    inv.status = 'error';
+    inv.statusMsg = 'No se pudo cargar Tesseract. Verifica tu conexión o agrega una API key.';
+    renderInvoice(idx);
+    return;
+  }
+
+  try {
+    inv.statusMsg = 'Leyendo texto de la imagen...';
+    renderInvoice(idx);
+
+    const { data: { text } } = await Tesseract.recognize(inv.imgData, 'spa', {
+      logger: m => {
+        if (m.status === 'recognizing text') {
+          inv.statusMsg = `OCR: ${Math.round(m.progress * 100)}%...`;
+          renderInvoice(idx);
+        }
+      }
+    });
+
+    inv.status = 'ready';
+    inv.statusMsg = 'OCR completado — buscando en catálogo...';
+    renderInvoice(idx);
+
+    const items = matchTextToCatalog(text);
+    inv.items = items;
+    inv.statusMsg = `OCR gratuito: ${items.length} artículo(s) — ${items.filter(i=>i.status==='ok').length} encontrado(s). ${items.filter(i=>i.status!=='ok').length} para revisar.`;
+    renderInvoice(idx);
+
+  } catch(e) {
+    inv.status = 'error';
+    inv.statusMsg = 'Error en OCR: ' + e.message;
+    renderInvoice(idx);
+  }
+}
+
+// Patrones que indican que una línea NO es un producto
+const SKIP_LINE = [
+  /^(total|subtotal|fecha|factura|n[°º]|cliente|direcci|dir\.?|nombre|nit|tel|fax|ciudad|bogot|barrio|cra|calle|av\.|local|piso)/i,
+  /^\$[\d\s.,]+$/,          // línea solo con precio
+  /^[\d\s.,]+$/,            // línea solo numérica
+  /\d{3}[\s.\-]\d{4}/,      // teléfono
+  /\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}/, // fecha
+  /^(partes|accesorios|repuestos|autopartes|vehículo|vehiculo)/i,
+  /^[a-záéíóú]{1,3}$/i,     // palabra muy corta (ruido OCR)
+  /^[^a-záéíóú\d]/i,        // empieza con símbolo raro
+];
+
+function matchTextToCatalog(rawText) {
+  const lines = rawText.split('\n').map(l => l.trim()).filter(l => l.length > 3);
+  const items = [];
+  const seenCodes = new Set();
+
+  for (const line of lines) {
+    // Saltar líneas que claramente no son productos
+    if (SKIP_LINE.some(p => p.test(line))) continue;
+
+    // Extraer cantidad del inicio: "10 estab luv" / "10x estab" / "10 U estab"
+    let qty = 1, desc = line;
+    const mQty = line.match(/^(\d{1,3})\s*[xXuU]?\s+(.{4,})$/);
+    if (mQty) {
+      const n = parseInt(mQty[1]);
+      if (n >= 1 && n <= 500) { qty = n; desc = mQty[2].trim(); }
+    }
+
+    // Aplicar sinónimos y buscar en catálogo
+    const results = search(desc, 4);
+
+    // Solo incluir si hay un match real (score mínimo 6 = al menos una palabra clave coincide)
+    if (!results.length || results[0].sc < 6) continue;
+
+    const best = results[0];
+
+    // No duplicar el mismo código en la misma factura
+    if (seenCodes.has(best.code)) continue;
+    seenCodes.add(best.code);
+
+    items.push({
+      qty,
+      code: best.code,
+      desc: best.desc,
+      unit: best.price,
+      total: qty * best.price,
+      // 'ok' si el score es alto (varias palabras coinciden), 'warn' si es un match débil
+      status: best.sc >= 15 ? 'ok' : 'warn',
+      origDesc: desc
+    });
+  }
+  return items;
+}
+
+// ============================================================
+// SYNONYM FILE — FILE SYSTEM ACCESS API (auto-save al archivo)
+// ============================================================
+let synFileHandle = null;
+
+async function linkSynonymFile() {
+  if (!window.showOpenFilePicker) {
+    showToast('Tu navegador no soporta acceso a archivos locales. Usa Chrome o Edge.');
+    return;
+  }
+  try {
+    const [handle] = await window.showOpenFilePicker({
+      types: [{ description: 'JSON de sinónimos', accept: { 'application/json': ['.json'] } }],
+      multiple: false
+    });
+    synFileHandle = handle;
+
+    // Leer y mergear los sinónimos del archivo
+    const file = await handle.getFile();
+    const text = await file.text();
+    try {
+      const data = JSON.parse(text);
+      const incoming = data.sinonimos || (typeof data === 'object' ? data : {});
+      let count = 0;
+      for (const [k, v] of Object.entries(incoming)) {
+        if (typeof k === 'string' && typeof v === 'string' && !k.startsWith('_')) {
+          SYN_STORAGE[k] = v; count++;
+        }
+      }
+      if (count) {
+        localStorage.setItem('rjch_sinonimos', JSON.stringify(SYN_STORAGE));
+        updateSynUI();
+      }
+    } catch(e) { /* archivo vacío o nuevo, está bien */ }
+
+    updateSynFileBanner(handle.name);
+    showToast(`✓ Archivo vinculado: ${handle.name} — los sinónimos se guardarán automáticamente`);
+
+  } catch(e) {
+    if (e.name !== 'AbortError') showToast('Error al vincular archivo: ' + e.message);
+  }
+}
+
+async function autoSaveSynFile() {
+  if (!synFileHandle) return;
+  try {
+    const writable = await synFileHandle.createWritable();
+    const data = {
+      _comment: 'Sinónimos aprendidos automáticamente — Facturador RJCH',
+      _version: '1.0',
+      _ultima_actualizacion: new Date().toLocaleDateString('es-CO'),
+      _total: Object.keys(SYN_STORAGE).length,
+      sinonimos: SYN_STORAGE
+    };
+    await writable.write(JSON.stringify(data, null, 2));
+    await writable.close();
+  } catch(e) {
+    console.warn('Auto-save sinónimos falló:', e.message);
+    // Si el permiso expiró, notificar pero no molestar demasiado
+    if (e.name === 'NotAllowedError') {
+      synFileHandle = null;
+      updateSynFileBanner(null);
+      showToast('⚠ Permiso de archivo expiró — vincula el archivo nuevamente');
+    }
+  }
+}
+
+function updateSynFileBanner(filename) {
+  const el = document.getElementById('synFileBanner');
+  const btn = document.getElementById('btnLinkFile');
+  if (!el) return;
+  if (filename) {
+    el.style.display = 'block';
+    el.style.cssText = 'display:block;padding:6px 8px;border-radius:var(--radius);font-size:10px;margin-bottom:8px;background:var(--green-bg);border:1px solid var(--green-border);color:var(--green)';
+    el.textContent = `✓ Auto-guardando en: ${filename}`;
+    if (btn) btn.textContent = '📂 Cambiar archivo vinculado';
+  } else {
+    el.style.display = 'none';
+    if (btn) btn.textContent = '📂 Vincular sinonimos_rjch.json';
+  }
+}
+
+// ============================================================
+// SYNONYM FILE MANAGEMENT
+// ============================================================
+function updateSynUI() {
+  const keys = Object.keys(SYN_STORAGE);
+  const stats = document.getElementById('synStats');
+  if (stats) {
+    stats.textContent = keys.length
+      ? `${keys.length} sinónimo(s) aprendido(s)`
+      : 'Ningún sinónimo aprendido aún.';
+  }
+  const preview = document.getElementById('synPreview');
+  if (preview) {
+    preview.innerHTML = keys.slice(0, 30).map(k =>
+      `<span><strong>${k}</strong> → ${SYN_STORAGE[k]}</span>  `
+    ).join('') + (keys.length > 30 ? `<em>... y ${keys.length - 30} más</em>` : '');
+  }
+}
+
+function exportSynonyms() {
+  const data = {
+    _comment: 'Sinónimos aprendidos del Facturador RJCH',
+    _version: '1.0',
+    _exportado: new Date().toLocaleDateString('es-CO'),
+    _total: Object.keys(SYN_STORAGE).length,
+    sinonimos: SYN_STORAGE
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'sinonimos_rjch.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  showToast('✓ Archivo sinonimos_rjch.json descargado');
+}
+
+function importSynonyms(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const data = JSON.parse(e.target.result);
+      const incoming = data.sinonimos || data; // accept both formats
+      if (typeof incoming !== 'object') throw new Error('Formato inválido');
+      let count = 0;
+      for (const [k, v] of Object.entries(incoming)) {
+        if (typeof k === 'string' && typeof v === 'string' && !k.startsWith('_')) {
+          SYN_STORAGE[k] = v;
+          count++;
+        }
+      }
+      localStorage.setItem('rjch_sinonimos', JSON.stringify(SYN_STORAGE));
+      updateSynUI();
+      autoSaveSynFile();
+      showToast(`✓ ${count} sinónimos importados`);
+    } catch(e) {
+      alert('Error al leer el archivo: ' + e.message);
+    }
+    input.value = '';
+  };
+  reader.readAsText(file);
+}
+
+function clearSynonyms() {
+  if (!confirm(`¿Eliminar todos los ${Object.keys(SYN_STORAGE).length} sinónimos aprendidos?`)) return;
+  SYN_STORAGE = {};
+  localStorage.removeItem('rjch_sinonimos');
+  updateSynUI();
+  autoSaveSynFile();
+  showToast('Sinónimos eliminados');
+}
+
+// ============================================================
+// COPY TABLE FOR EXCEL (TSV)
+// ============================================================
+function copyTableTSV(idx) {
+  const inv = invoices[idx];
+  if (!inv.items.length) { showToast('No hay artículos para copiar'); return; }
+  const fecha = new Date().toLocaleDateString('es-CO');
+  const total = inv.items.reduce((s, i) => s + i.total, 0);
+  const header = ['Fecha', 'N_Factura', 'Cliente', 'Código', 'Descripción', 'Cantidad', 'Vr_Unitario', 'Vr_Total', 'Total_Factura'];
+  const rows = inv.items.map(it => [
+    it.qty,
+    it.code,
+    it.desc,
+    Math.round(it.unit),
+    Math.round(it.total)
+  ]);
+  const tsv = rows.map(r => r.join('\t')).join('\n');
+  navigator.clipboard.writeText(tsv)
+    .then(() => showToast('✓ Tabla copiada — pega en Excel con Ctrl+V'))
+    .catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = tsv;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showToast('✓ Tabla copiada — pega en Excel con Ctrl+V');
+    });
+}
+
+function copyAllTSV() {
+  const fecha = new Date().toLocaleDateString('es-CO');
+  const header = ['Fecha', 'N_Factura', 'Cliente', 'Imagen', 'Código', 'Descripción', 'Cantidad', 'Vr_Unitario', 'Vr_Total', 'Total_Factura'];
+  const rows = [];
+  for (const inv of invoices) {
+    const total = inv.items.reduce((s, i) => s + i.total, 0);
+    for (const it of inv.items) {
+      rows.push([it.qty, it.code, it.desc, Math.round(it.unit), Math.round(it.total)]);
+    }
+  }
+  if (!rows.length) { showToast('No hay artículos para copiar'); return; }
+  const tsv = rows.map(r => r.join('\t')).join('\n');
+  navigator.clipboard.writeText(tsv)
+    .then(() => showToast(`✓ ${rows.length} filas copiadas — pega en Excel con Ctrl+V`))
+    .catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = tsv;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showToast(`✓ ${rows.length} filas copiadas — pega en Excel con Ctrl+V`);
+    });
+}
+
+// Keyboard shortcut: Escape closes modals
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeModal();
+    closeRemoveChoice();
+    document.getElementById('imgPreview').classList.remove('open');
+  }
+});
+
+// ============================================================
+// START
+// ============================================================
+init();
+</script>
+</body>
+</html>
