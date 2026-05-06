@@ -14,7 +14,7 @@
 :root{
   --bg:#f4f6f9;--surface:#fff;--border:#e2e8f0;--border2:#cbd5e1;
   --text:#1e293b;--text2:#64748b;--text3:#94a3b8;
-  --blue:#3b82f6;--blue-bg:#eff6ff;--blue-border:#bfdbfe;
+  --blue:#1e6fff;--blue-dark:#1858d6;--blue-bg:#eff6ff;--blue-border:#bfdbfe;
   --green:#16a34a;--green-bg:#f0fdf4;--green-border:#bbf7d0;
   --orange:#d97706;--orange-bg:#fffbeb;--orange-border:#fde68a;
   --red:#dc2626;--red-bg:#fef2f2;--red-border:#fecaca;
@@ -23,17 +23,19 @@
   --shadow-lg:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -2px rgba(0,0,0,.05);
 }
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px}
-.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}
+.topbar{background:var(--blue);border-bottom:1px solid var(--blue-dark);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}
 .topbar-brand{display:flex;flex-direction:column;gap:1px}
-.topbar-brand strong{font-size:13px;font-weight:700;color:var(--green)}
-.topbar-brand span{font-size:10px;color:var(--text2)}
+.topbar-brand strong{font-size:13px;font-weight:700;color:#fff;letter-spacing:.3px}
+.topbar-brand span{font-size:10px;color:rgba(255,255,255,.85)}
 .topbar-actions{display:flex;align-items:center;gap:8px}
+.topbar .btn{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.35);color:#fff}
+.topbar .btn:hover{background:rgba(255,255,255,.25)}
 .btn{cursor:pointer;font-family:inherit;font-size:12px;border-radius:var(--radius);padding:7px 14px;border:1px solid var(--border2);background:var(--surface);color:var(--text);font-weight:500;transition:.15s;display:inline-flex;align-items:center;gap:5px}
 .btn:hover{background:var(--bg)}
 .btn-primary{background:var(--blue);border-color:var(--blue);color:#fff}
-.btn-primary:hover{background:#2563eb;border-color:#2563eb}
-.btn-green{background:var(--green);border-color:var(--green);color:#fff}
-.btn-green:hover{background:#15803d}
+.btn-primary:hover{background:var(--blue-dark);border-color:var(--blue-dark)}
+.btn-green{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn-green:hover{background:var(--blue-dark);border-color:var(--blue-dark)}
 .btn-red{background:var(--red);border-color:var(--red);color:#fff}
 .btn-red:hover{background:#b91c1c}
 .btn-sm{padding:4px 10px;font-size:11px}
@@ -43,7 +45,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .badge-warn{background:var(--orange-bg);color:var(--orange);border:1px solid var(--orange-border)}
 .badge-err{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border)}
 .badge-blue{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border)}
-main{max-width:1200px;margin:0 auto;padding:20px}
+main{max-width:1200px;margin:0 auto;padding:20px 20px 96px}
 .upload-zone{border:2px dashed var(--border2);border-radius:var(--radius-lg);padding:32px;text-align:center;cursor:pointer;background:var(--surface);transition:.2s;margin-bottom:20px}
 .upload-zone:hover,.upload-zone.over{border-color:var(--blue);background:var(--blue-bg)}
 .upload-zone svg{margin-bottom:10px;color:var(--text3)}
@@ -120,9 +122,14 @@ input:focus,select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 
 .settings-drawer-header h3{font-size:14px;font-weight:700;margin:0}
 .settings-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--text2);line-height:1;padding:2px 6px}
 .settings-close:hover{color:var(--text)}
-.settings-grid{display:flex;flex-direction:column;gap:16px}
-.settings-section{padding:14px;background:var(--bg);border-radius:var(--radius);border:1px solid var(--border)}
-.settings-section h4{font-size:12px;font-weight:700;margin-bottom:10px;color:var(--text)}
+.settings-grid{display:flex;flex-direction:column;gap:10px}
+.settings-section{background:var(--bg);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden}
+.settings-section h4{font-size:12px;font-weight:700;margin:0;color:var(--text);padding:12px 14px;cursor:pointer;user-select:none;display:flex;align-items:center;justify-content:space-between;background:var(--bg);transition:.15s}
+.settings-section h4:hover{background:#eef2f7}
+.settings-section h4::after{content:'▸';font-size:12px;color:var(--text2);transition:transform .2s}
+.settings-section.open h4::after{transform:rotate(90deg)}
+.settings-section .section-body{padding:0 14px 14px 14px;display:none}
+.settings-section.open .section-body{display:block}
 .g-status{font-size:11px;padding:4px 8px;border-radius:var(--radius);margin-top:8px;display:inline-block}
 .g-status.ok{background:var(--green-bg);color:var(--green)}
 .g-status.pending{background:var(--orange-bg);color:var(--orange)}
@@ -130,6 +137,20 @@ input:focus,select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 
 .img-preview-bg{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;z-index:2000}
 .img-preview-bg.open{display:flex}
 .img-preview-bg img{max-width:90vw;max-height:90vh;border-radius:var(--radius);box-shadow:var(--shadow-lg)}
+/* Compare view */
+.compare-bg{position:fixed;inset:0;background:rgba(15,23,42,.92);display:none;z-index:1500;flex-direction:column}
+.compare-bg.open{display:flex}
+.compare-header{height:48px;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 16px;flex-shrink:0;box-shadow:var(--shadow)}
+.compare-header strong{font-size:13px;font-weight:700}
+.compare-close{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:var(--radius);padding:5px 12px;cursor:pointer;font-size:12px;font-family:inherit}
+.compare-close:hover{background:rgba(255,255,255,.3)}
+.compare-body{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:0;overflow:hidden;min-height:0}
+.compare-pane{overflow:auto;background:var(--surface);min-height:0}
+.compare-pane.left{background:#0f172a;display:flex;align-items:center;justify-content:center;padding:12px}
+.compare-pane.left img{max-width:100%;max-height:100%;object-fit:contain;border-radius:var(--radius);cursor:zoom-in}
+.compare-pane.right{padding:18px;border-left:1px solid var(--border)}
+.compare-bg .btn-compare{display:none}
+@media(max-width:768px){.compare-body{grid-template-columns:1fr;grid-template-rows:1fr 1fr}}
 /* Bottom save bar */
 .save-bar{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;z-index:99;box-shadow:0 -4px 6px -1px rgba(0,0,0,.05);display:none}
 .save-bar.visible{display:flex}
@@ -163,79 +184,85 @@ input:focus,select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 
       <button class="settings-close" onclick="toggleSettings()">✕</button>
     </div>
     <div class="settings-grid">
-      <div class="settings-section">
-        <h4>🤖 Anthropic API Key</h4>
-        <label>Clave API (se guarda localmente)</label>
-        <div style="display:flex;gap:8px">
-          <input type="password" id="apiKeyInput" placeholder="sk-ant-..." style="flex:1">
-          <button class="btn btn-primary btn-sm" onclick="saveApiKey()">Guardar</button>
-        </div>
-        <div id="apiKeyStatus" style="font-size:11px;margin-top:6px;color:var(--text2)"></div>
-        <details style="margin-top:8px">
-          <summary style="font-size:11px;cursor:pointer;color:var(--blue)">¿Cómo obtener la API Key?</summary>
-          <div style="font-size:10px;color:var(--text2);line-height:1.6;margin-top:6px">
-            1. Ir a <strong>console.anthropic.com</strong><br>
-            2. Crear cuenta o iniciar sesión<br>
-            3. Menú izquierdo → <strong>API Keys</strong><br>
-            4. Clic en <strong>Create Key</strong><br>
-            5. Copiar la clave (empieza con <code>sk-ant-</code>)<br>
-            6. Pégala aquí y clic en Guardar<br><br>
-            <span style="color:var(--orange)">⚠ Los primeros $5 USD son gratis. Analizar ~200 fotos cuesta aprox $1.</span>
+      <div class="settings-section" id="sec-api">
+        <h4 onclick="toggleSection('sec-api')">🤖 Anthropic API Key</h4>
+        <div class="section-body">
+          <label>Clave API (se guarda localmente)</label>
+          <div style="display:flex;gap:8px">
+            <input type="password" id="apiKeyInput" placeholder="sk-ant-..." style="flex:1">
+            <button class="btn btn-primary btn-sm" onclick="saveApiKey()">Guardar</button>
           </div>
-        </details>
-        <div style="margin-top:10px">
-          <label style="margin-bottom:4px">Modelo Claude</label>
-          <select id="modelSelect">
-            <option value="claude-sonnet-4-6">Claude Sonnet 4.6 (recomendado)</option>
-            <option value="claude-haiku-4-5-20251001">Claude Haiku 4.5 (más rápido)</option>
-            <option value="claude-opus-4-7">Claude Opus 4.7 (más potente)</option>
-          </select>
-        </div>
-        <div style="margin-top:10px;padding:8px;background:#f0f9ff;border:1px solid #bae6fd;border-radius:var(--radius);font-size:10px;color:#0369a1;line-height:1.5">
-          <strong>Sin API key:</strong> la app usará OCR gratuito (<strong>Tesseract.js</strong>) para leer el texto de las imágenes y buscará los productos en el catálogo usando los sinónimos aprendidos. Funciona offline pero es menos preciso que la IA.
+          <div id="apiKeyStatus" style="font-size:11px;margin-top:6px;color:var(--text2)"></div>
+          <details style="margin-top:8px">
+            <summary style="font-size:11px;cursor:pointer;color:var(--blue)">¿Cómo obtener la API Key?</summary>
+            <div style="font-size:10px;color:var(--text2);line-height:1.6;margin-top:6px">
+              1. Ir a <strong>console.anthropic.com</strong><br>
+              2. Crear cuenta o iniciar sesión<br>
+              3. Menú izquierdo → <strong>API Keys</strong><br>
+              4. Clic en <strong>Create Key</strong><br>
+              5. Copiar la clave (empieza con <code>sk-ant-</code>)<br>
+              6. Pégala aquí y clic en Guardar<br><br>
+              <span style="color:var(--orange)">⚠ Los primeros $5 USD son gratis. Analizar ~200 fotos cuesta aprox $1.</span>
+            </div>
+          </details>
+          <div style="margin-top:10px">
+            <label style="margin-bottom:4px">Modelo Claude</label>
+            <select id="modelSelect">
+              <option value="claude-sonnet-4-6">Claude Sonnet 4.6 (recomendado)</option>
+              <option value="claude-haiku-4-5-20251001">Claude Haiku 4.5 (más rápido)</option>
+              <option value="claude-opus-4-7">Claude Opus 4.7 (más potente)</option>
+            </select>
+          </div>
+          <div style="margin-top:10px;padding:8px;background:#f0f9ff;border:1px solid #bae6fd;border-radius:var(--radius);font-size:10px;color:#0369a1;line-height:1.5">
+            <strong>Sin API key:</strong> la app usará OCR gratuito (<strong>Tesseract.js</strong>) para leer el texto de las imágenes y buscará los productos en el catálogo usando los sinónimos aprendidos. Funciona offline pero es menos preciso que la IA.
+          </div>
         </div>
       </div>
-      <div class="settings-section">
-        <h4>📊 Google Sheets</h4>
-        <label>Google Client ID (para leer catálogo y guardar facturas)</label>
-        <input type="text" id="gClientId" placeholder="xxxx.apps.googleusercontent.com" style="margin-bottom:8px">
-        <button class="btn btn-primary btn-sm" onclick="initGoogleAuth()" style="width:100%">Conectar con Google</button>
-        <div id="gAuthStatus" class="g-status pending" style="margin-top:8px">No conectado</div>
-        <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
-          <div style="font-size:11px;font-weight:600;margin-bottom:6px">Catálogo</div>
-          <div id="catStatus" style="font-size:11px;color:var(--text2);margin-bottom:6px"></div>
-          <button class="btn btn-sm" onclick="tryLoadCatalogPublic()" style="width:100%;margin-bottom:4px">↻ Actualizar desde Drive</button>
-        </div>
-        <details style="margin-top:8px">
-          <summary style="font-size:11px;cursor:pointer;color:var(--blue)">¿Cómo obtener el Client ID?</summary>
-          <div style="font-size:10px;color:var(--text2);line-height:1.6;margin-top:6px">
-            1. Ir a <strong>console.cloud.google.com</strong><br>
-            2. Crear proyecto → APIs & Services → Credentials<br>
-            3. Create Credentials → OAuth Client ID<br>
-            4. Tipo: <strong>Web application</strong><br>
-            5. Authorized JS origins: <code>http://localhost</code> o tu dominio<br>
-            6. Copiar el Client ID aquí
+      <div class="settings-section" id="sec-google">
+        <h4 onclick="toggleSection('sec-google')">📊 Google Sheets</h4>
+        <div class="section-body">
+          <label>Google Client ID (para leer catálogo y guardar facturas)</label>
+          <input type="text" id="gClientId" placeholder="xxxx.apps.googleusercontent.com" style="margin-bottom:8px">
+          <button class="btn btn-primary btn-sm" onclick="initGoogleAuth()" style="width:100%">Conectar con Google</button>
+          <div id="gAuthStatus" class="g-status pending" style="margin-top:8px">No conectado</div>
+          <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
+            <div style="font-size:11px;font-weight:600;margin-bottom:6px">Catálogo</div>
+            <div id="catStatus" style="font-size:11px;color:var(--text2);margin-bottom:6px"></div>
+            <button class="btn btn-sm" onclick="tryLoadCatalogPublic()" style="width:100%;margin-bottom:4px">↻ Actualizar desde Drive</button>
           </div>
-        </details>
+          <details style="margin-top:8px">
+            <summary style="font-size:11px;cursor:pointer;color:var(--blue)">¿Cómo obtener el Client ID?</summary>
+            <div style="font-size:10px;color:var(--text2);line-height:1.6;margin-top:6px">
+              1. Ir a <strong>console.cloud.google.com</strong><br>
+              2. Crear proyecto → APIs & Services → Credentials<br>
+              3. Create Credentials → OAuth Client ID<br>
+              4. Tipo: <strong>Web application</strong><br>
+              5. Authorized JS origins: <code>http://localhost</code> o tu dominio<br>
+              6. Copiar el Client ID aquí
+            </div>
+          </details>
+        </div>
       </div>
 
-      <div class="settings-section">
-        <h4>📖 Sinónimos aprendidos</h4>
-        <div id="synStats" style="font-size:11px;color:var(--text2);margin-bottom:8px"></div>
-        <div id="synFileBanner" style="display:none;padding:6px 8px;border-radius:var(--radius);font-size:10px;margin-bottom:8px"></div>
-        <div style="display:flex;flex-direction:column;gap:6px">
-          <button class="btn btn-sm btn-primary" onclick="linkSynonymFile()" style="width:100%" id="btnLinkFile">📂 Vincular sinonimos_rjch.json</button>
-          <button class="btn btn-sm btn-green" onclick="exportSynonyms()" style="width:100%">⬇ Descargar copia</button>
-          <label class="btn btn-sm" style="width:100%;justify-content:center;cursor:pointer">
-            ⬆ Importar archivo de sinónimos
-            <input type="file" accept=".json" style="display:none" onchange="importSynonyms(this)">
-          </label>
-          <button class="btn btn-sm btn-red" onclick="clearSynonyms()" style="width:100%">🗑 Limpiar todos</button>
+      <div class="settings-section" id="sec-syn">
+        <h4 onclick="toggleSection('sec-syn')">📖 Sinónimos aprendidos</h4>
+        <div class="section-body">
+          <div id="synStats" style="font-size:11px;color:var(--text2);margin-bottom:8px"></div>
+          <div id="synFileBanner" style="display:none;padding:6px 8px;border-radius:var(--radius);font-size:10px;margin-bottom:8px"></div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <button class="btn btn-sm btn-primary" onclick="linkSynonymFile()" style="width:100%" id="btnLinkFile">📂 Vincular sinonimos_rjch.json</button>
+            <button class="btn btn-sm btn-green" onclick="exportSynonyms()" style="width:100%">⬇ Descargar copia</button>
+            <label class="btn btn-sm" style="width:100%;justify-content:center;cursor:pointer">
+              ⬆ Importar archivo de sinónimos
+              <input type="file" accept=".json" style="display:none" onchange="importSynonyms(this)">
+            </label>
+            <button class="btn btn-sm btn-red" onclick="clearSynonyms()" style="width:100%">🗑 Limpiar todos</button>
+          </div>
+          <div style="margin-top:10px;padding:8px;background:var(--green-bg);border:1px solid var(--green-border);border-radius:var(--radius);font-size:10px;color:var(--green);line-height:1.5">
+            Vincula el archivo <code>sinonimos_rjch.json</code> del repositorio — cada vez que se aprenda un sinónimo nuevo se guardará automáticamente en ese archivo, sin hacer nada.
+          </div>
+          <div id="synPreview" style="margin-top:8px;max-height:100px;overflow-y:auto;font-size:10px;color:var(--text2);line-height:1.8"></div>
         </div>
-        <div style="margin-top:10px;padding:8px;background:var(--green-bg);border:1px solid var(--green-border);border-radius:var(--radius);font-size:10px;color:var(--green);line-height:1.5">
-          Vincula el archivo <code>sinonimos_rjch.json</code> del repositorio — cada vez que se aprenda un sinónimo nuevo se guardará automáticamente en ese archivo, sin hacer nada.
-        </div>
-        <div id="synPreview" style="margin-top:8px;max-height:100px;overflow-y:auto;font-size:10px;color:var(--text2);line-height:1.8"></div>
       </div>
     </div>
     <div style="margin-top:12px;font-size:11px;color:var(--text2);background:var(--orange-bg);padding:8px 12px;border-radius:var(--radius);border:1px solid var(--orange-border)">
@@ -320,6 +347,20 @@ input:focus,select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 
 <!-- Image Preview -->
 <div class="img-preview-bg" id="imgPreview" onclick="this.classList.remove('open')">
   <img id="imgPreviewSrc" src="">
+</div>
+
+<!-- Compare View (split-screen) -->
+<div class="compare-bg" id="compareView">
+  <div class="compare-header">
+    <strong id="compareTitle">Comparar factura</strong>
+    <button class="compare-close" onclick="closeCompare()">✕ Cerrar</button>
+  </div>
+  <div class="compare-body">
+    <div class="compare-pane left">
+      <img id="compareImg" src="" onclick="previewImg(this.src)">
+    </div>
+    <div class="compare-pane right" id="compareInvoice"></div>
+  </div>
 </div>
 
 <script>
@@ -417,6 +458,44 @@ function updateCatStatus() {
 function toggleSettings() {
   document.getElementById('settingsPanel').classList.toggle('open');
   document.getElementById('settingsOverlay').classList.toggle('open');
+}
+
+function toggleSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return;
+  const wasOpen = sec.classList.contains('open');
+  document.querySelectorAll('.settings-section').forEach(s => s.classList.remove('open'));
+  if (!wasOpen) sec.classList.add('open');
+}
+
+let compareReturnState = null;
+function openCompare(idx) {
+  if (compareReturnState) return;
+  const inv = invoices[idx];
+  if (!inv || !inv.imgData) return;
+  const card = document.getElementById('inv-' + idx);
+  if (!card) return;
+  document.getElementById('compareImg').src = inv.imgData;
+  document.getElementById('compareTitle').textContent = 'Comparar — ' + (inv.file?.name || 'factura');
+  const placeholder = document.createElement('div');
+  placeholder.id = 'compare-placeholder';
+  placeholder.style.display = 'none';
+  card.parentNode.insertBefore(placeholder, card);
+  compareReturnState = { idx, placeholder };
+  document.getElementById('compareInvoice').appendChild(card);
+  document.getElementById('compareView').classList.add('open');
+}
+
+function closeCompare() {
+  document.getElementById('compareView').classList.remove('open');
+  if (!compareReturnState) return;
+  const { idx, placeholder } = compareReturnState;
+  const card = document.getElementById('inv-' + idx);
+  if (card && placeholder && placeholder.parentNode) {
+    placeholder.parentNode.insertBefore(card, placeholder);
+    placeholder.remove();
+  }
+  compareReturnState = null;
 }
 
 function saveApiKey() {
@@ -720,6 +799,7 @@ function renderInvoice(idx) {
       ${inv.status === 'saved' ? '<span style="color:var(--green);font-weight:600">✅ Guardada en Google Sheets</span>' : ''}
     </div>
     <div style="display:flex;gap:8px">
+      ${inv.imgData ? `<button class="btn btn-primary btn-sm btn-compare" onclick="openCompare(${idx})" title="Ver imagen y factura lado a lado">⇆ Comparar</button>` : ''}
       <button class="btn btn-sm" onclick="copyTableTSV(${idx})" title="Copia la tabla para pegar en Excel">📋 Copiar para Excel</button>
       <button class="btn btn-sm" onclick="exportCSV(${idx})">⬇ CSV</button>
       <button class="btn btn-green btn-sm" onclick="saveInvoice(${idx})">💾 Guardar en Sheets</button>
